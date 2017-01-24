@@ -13,20 +13,28 @@ var News = require('./../models/NewsSchema');
 ///////////////////////////////////
 
 router.get('/', (req, res) => {
-    console.log('get homepage');
     // get all the users
     News.find({}, function(err, news) {
-        //if (err) throw err;
-
-        // object of all the news
-        //console.log(news);
-        res.send(news);
-    });
+    res.send(news);
+});
+});
+router.get('/category/:specificCategory?', (req, res) => {
+   //get only selected category
+    if (!req.params.specificCategory){
+        //no category supplied, send all
+        News.find({}, function(err, news){
+            res.send(news);
+        })
+    }else{
+        const chosen_category = req.params.specificCategory;
+        News.find({ category: chosen_category }, (err, news) => {
+           res.send(news);
+        });
+    }
 });
 
 router.post('/addNews', (req, res) => {
-    console.log(req.body);
- //create a new news
+    //create a new news
     var new_news = News({
         newsHeadline: req.body.newsHeadline,
         category: req.body.category,
@@ -35,21 +43,19 @@ router.post('/addNews', (req, res) => {
         newsImageUrl: req.body.newsImageUrl
     });
 
-    console.log(new_news);
 
- //save the news
-    new_news.save(function(err) {
-        if (err) throw err;
-
-        console.log('News created!');
-    });
+//save the news
+new_news.save(function(err) {
+    if (err) throw err;
+    res.sendStatus(200);
+});
 });
 
 router.put('/updateNews', (req, res) => {
     //will receive id from req.body
     let $id = '5884f18f5df3583714a10629';
 
-    if ($id){
+if ($id){
     // get a user with ID of $id
     News.findById($id, function(err, news) {
         if (err) throw err;
@@ -61,16 +67,16 @@ router.put('/updateNews', (req, res) => {
         news.save(function(err) {
             if (err) throw err;
 
-            console.log('news successfully updated!');
+            res.sendStatus(200);
         });
     });
-    }
+}
 });
 
 router.delete('/deleteNews', (req, res) => {
     //will receive id from req.body
     let $id = '5884f18f5df3583714a10629';
-    if ($id){
+if ($id){
     News.findById($id, function(err, news) {
         if (err) throw err;
 
@@ -78,10 +84,10 @@ router.delete('/deleteNews', (req, res) => {
         news.remove(function(err) {
             if (err) throw err;
 
-            console.log('News successfully deleted!');
+            res.sendStatus(200);
         });
     });
-    }
+}
 });
 
 module.exports = router;
