@@ -2,7 +2,10 @@
   "name": "random_news",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
+  "engines": {
+    "node": "7.3.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.16.0",
+    "cors": "^2.8.1",
     "express": "^4.14.0",
     "mongoose": "^4.7.7"
   }

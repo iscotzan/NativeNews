@@ -4,7 +4,10 @@
  */
 global.BASE_PATH = __dirname;
 const express = require('express');
+const cors = require('cors');
 const app = express();
+//allow cors
+app.use(cors());
 const bodyParser = require('body-parser');
 
 const port = 3000;
