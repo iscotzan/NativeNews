@@ -10,13 +10,13 @@ const app = express();
 app.use(cors());
 const bodyParser = require('body-parser');
 
-const port = 3000;
+const port = 5000;
 
 app.set('view engine', 'html');
 //app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
-app.listen( port, function(){
+app.listen( process.env.PORT || port, function(){
 
    console.log('listening on port ' + port);
 });
